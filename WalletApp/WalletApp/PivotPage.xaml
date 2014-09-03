@@ -20,47 +20,23 @@
     </Page.Transitions>
 
     <Grid>
-        <Pivot x:Uid="Pivot" Title="MY APPLICATION" x:Name="pivot" CommonNavigationTransitionInfo.IsStaggerElement="True">
+        <Pivot x:Uid="Pivot" Title="APP NAME" x:Name="pivot" CommonNavigationTransitionInfo.IsStaggerElement="True">
             <!--Pivot item one-->
             <PivotItem
-                x:Uid="PivotItem1"
+                x:Uid="Balance"
                 Margin="19,14.5,0,0"
                 Header="first"
                 DataContext="{Binding FirstGroup}"
-                d:DataContext="{Binding Groups[0], Source={d:DesignData Source=/DataModel/SampleData.json, Type=data:SampleDataSource}}"
                 CommonNavigationTransitionInfo.IsStaggerElement="True">
-                <!--Double line list with text wrapping-->
-                <ListView
-                    ItemsSource="{Binding Items}"
-                    IsItemClickEnabled="True"
-                    ItemClick="ItemView_ItemClick"
-                    ContinuumNavigationTransitionInfo.ExitElementContainer="True">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0,0,0,9.5">
-                                <TextBlock
-                                    Text="{Binding Title}"
-                                    TextWrapping="Wrap"
-                                    Pivot.SlideInAnimationGroup="1"
-                                    CommonNavigationTransitionInfo.IsStaggerElement="True"
-                                    Style="{ThemeResource ListViewItemTextBlockStyle}"
-                                    Margin="0,0,19,0"/>
-                                <TextBlock
-                                    Text="{Binding Description}"
-                                    TextWrapping="WrapWholeWords"
-                                    Pivot.SlideInAnimationGroup="2" 
-                                    CommonNavigationTransitionInfo.IsStaggerElement="True" 
-                                    Style="{ThemeResource ListViewItemContentTextBlockStyle}"
-                                    Margin="0,0,19,0"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+
+                    <TextBlock Name="testeTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="119" Width="371"/>
+
+
             </PivotItem>
 
             <!--Pivot item two-->
             <PivotItem
-                x:Uid="PivotItem2"
+                x:Uid="Manager"
                 Margin="19,14.5,0,0"
                 Header="second"
                 DataContext="{Binding SecondGroup}"
@@ -69,8 +45,8 @@
                 <ListView
                     ItemsSource="{Binding Items}"
                     IsItemClickEnabled="True"
-                    ItemClick="ItemView_ItemClick"
-                    Loaded="SecondPivot_Loaded"
+                    ItemClick="MoneyList_ItemClick"
+                    Loaded="Manager_Loaded"
                     ContinuumNavigationTransitionInfo.ExitElementContainer="True">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -95,10 +71,10 @@
 
     <Page.BottomAppBar>
         <CommandBar>
+            <AppBarButton x:Uid="UpdateAppBarButton" x:Name="UpdateAppBarButton" Label="update" Icon="Refresh" Click="UpdateAppBarButton_Click" />
             <AppBarButton x:Uid="AddAppBarButton" x:Name="AddAppBarButton" Label="add" Icon="Add" Click="AddAppBarButton_Click" />
             <CommandBar.SecondaryCommands>
-                <AppBarButton x:Uid="SecondaryButton1" x:Name="SecondaryButton1" Label="secondary command 1" />
-                <AppBarButton x:Uid="SecondaryButton2" x:Name="SecondaryButton2" Label="secondary command 2" />
+                <AppBarButton x:Uid="SettingsButton" x:Name="SettingsButton" Label="Settings Button" />
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

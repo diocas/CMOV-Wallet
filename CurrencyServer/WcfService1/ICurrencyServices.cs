@@ -15,21 +15,21 @@ namespace CurrencyService
         [OperationContract]
         [WebInvoke(Method = "GET",
             ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.Wrapped,
+            BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "CurrencyList")]
         List<Currency> GetCurrencyListing();
 
         [OperationContract]
         [WebInvoke(Method = "GET",
             ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.Wrapped,
+            BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "GetCurrency/{code}")]
         Currency GetCurrencyByCode(string code);
 
         [OperationContract]
         [WebInvoke(Method = "GET",
             ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.Wrapped,
+            BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "conversion/{code1}/{code2}")]
         double ConversionRate(string code1, string code2);
 

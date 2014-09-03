@@ -118,10 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddAppBarButton.Label" xml:space="preserve">
-    <value>add</value>
+    <value>add money</value>
+  </data>
+  <data name="Balance.Header" xml:space="preserve">
+    <value>Balance</value>
   </data>
   <data name="Header.Text" xml:space="preserve">
-    <value>MY APPLICATION</value>
+    <value>Wallet</value>
+  </data>
+  <data name="Manager.Header" xml:space="preserve">
+    <value>Manage</value>
   </data>
   <data name="NavigationFailedExceptionMessage" xml:space="preserve">
     <value>Navigation failed.</value>
@@ -133,18 +139,12 @@
     <value>Item Title: {0}</value>
   </data>
   <data name="Pivot.Title" xml:space="preserve">
-    <value>MY APPLICATION</value>
+    <value>Wallet</value>
   </data>
-  <data name="PivotItem1.Header" xml:space="preserve">
-    <value>first</value>
+  <data name="SettingsButton.Label" xml:space="preserve">
+    <value>settings</value>
   </data>
-  <data name="PivotItem2.Header" xml:space="preserve">
-    <value>second</value>
-  </data>
-  <data name="SecondaryButton1.Label" xml:space="preserve">
-    <value>secondary command 1</value>
-  </data>
-  <data name="SecondaryButton2.Label" xml:space="preserve">
-    <value>secondary command 2</value>
+  <data name="UpdateAppBarButton.Label" xml:space="preserve">
+    <value>update</value>
   </data>
 </root>

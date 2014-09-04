@@ -7,6 +7,7 @@ using System.Data.Linq;
 using System.Data.Linq.Mapping;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.IO.IsolatedStorage;
 
 
 namespace WalletApp.DataModel
@@ -35,27 +36,6 @@ namespace WalletApp.DataModel
             }
         }
 
-        // Define item name: private field, public property and database column.
-        private string _code;
-
-        [Column]
-        public string Code
-        {
-            get
-            {
-                return _code;
-            }
-            set
-            {
-                if (_code != value)
-                {
-                    NotifyPropertyChanging("Code");
-                    _code = value;
-                    NotifyPropertyChanged("Code");
-                }
-            }
-        }
-
         // Define completion value: private field, public property and database column.
         private double _quantity;
 
@@ -71,12 +51,62 @@ namespace WalletApp.DataModel
                 if (_quantity != value)
                 {
                     NotifyPropertyChanging("Quantity");
+                    NotifyPropertyChanging("ConvertedValue");
+                    NotifyPropertyChanging("ConvertedValueDouble");
                     _quantity = value;
                     NotifyPropertyChanged("Quantity");
+                    NotifyPropertyChanged("ConvertedValue");
+                    NotifyPropertyChanged("ConvertedValueDouble");
                 }
             }
         }
-        
+
+        // Internal column for the associated ToDoCategory ID value
+        [Column]
+        internal int _currencyId;
+
+        // Entity reference, to identify the ToDoCategory "storage" table
+        private EntityRef<Currency> _currency;
+
+        // Association, to describe the relationship between this key and that "storage" table
+        [Association(Storage = "_currency", ThisKey = "_currencyId", OtherKey = "Id", IsForeignKey = true)]
+        public Currency Currency
+        {
+            get { return _currency.Entity; }
+            set
+            {
+                NotifyPropertyChanging("Currency");
+                NotifyPropertyChanging("ConvertedValue");
+                NotifyPropertyChanging("ConvertedValueDouble");
+                _currency.Entity = value;
+
+                if (value != null)
+                {
+                    _currencyId = value.Id;
+                }
+
+                NotifyPropertyChanged("Currency");
+                NotifyPropertyChanged("ConvertedValue");
+                NotifyPropertyChanged("ConvertedValueDouble");
+            }
+        }
+
+        public string ConvertedValue
+        {
+            get
+            {
+                return ConvertedValueDouble.ToString("0.00") + IsolatedStorageSettings.ApplicationSettings["currencyCode"] as string;
+            }
+        }
+
+        public double ConvertedValueDouble
+        {
+            get
+            {
+                return ( Quantity * Currency.Value);
+            }
+        }
+
         // Version column aids update performance.
         [Column(IsVersion = true)]
         private Binary _version;

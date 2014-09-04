@@ -23,7 +23,7 @@ namespace WalletApp.DataAccess
         {
             using (HttpClient client = new HttpClient())
             {
-                var result = await client.GetAsync(server + service + "CurrencyList");
+                var result = await client.GetAsync(server + service + "CurrencyList?cache=" + Guid.NewGuid().ToString());
 
                 result.EnsureSuccessStatusCode();
 

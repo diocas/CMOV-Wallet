@@ -10,15 +10,16 @@ namespace WalletApp.DataAccess
 {
     public class MoneyDataContext : DataContext
     {
-         // Specify the connection string as a static, used in main page and app.xaml.
-    public static string DBConnectionString = "Data Source=isostore:/Wallet.sdf";
 
-    // Pass the connection string to the base class.
-    public MoneyDataContext(string connectionString)
-        : base(connectionString)
-    { }
+        public MoneyDataContext(string connectionString)
+            : base(connectionString)
+        { }
 
-    // Specify a single table for the to-do items.
-    public Table<Money> MoneyItems;
+
+        public Table<Money> MoneyItems;
+
+        public Table<Currency> CurrencyItems;
+
+
     }
 }

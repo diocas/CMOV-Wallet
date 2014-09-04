@@ -13,7 +13,7 @@ using System.Collections.ObjectModel;
 namespace WalletApp.DataModel
 {
     [Table]
-    class Currency : INotifyPropertyChanged, INotifyPropertyChanging
+    public class Currency : INotifyPropertyChanged, INotifyPropertyChanging
     {
         // Define ID: private field, public property and database column.
         private int _id;
@@ -78,9 +78,39 @@ namespace WalletApp.DataModel
             }
         }
 
-        
+
+        // Define the entity set for the collection side of the relationship.
+        private EntitySet<Money> _money;
+
+        [Association(Storage = "_money", OtherKey = "_currencyId", ThisKey = "Id")]
+        public EntitySet<Money> Money
+        {
+            get { return this._money; }
+            set { this._money.Assign(value); }
+        }
+
+
+        // Assign handlers for the add and remove operations, respectively.
         public Currency()
         {
+            _money = new EntitySet<Money>(
+                new Action<Money>(this.attach_Money),
+                new Action<Money>(this.detach_Money)
+                );
+        }
+
+        // Called during an add operation
+        private void attach_Money(Money money)
+        {
+            NotifyPropertyChanging("Money");
+            money.Currency = this;
+        }
+
+        // Called during a remove operation
+        private void detach_Money(Money money)
+        {
+            NotifyPropertyChanging("Money");
+            money.Currency = null;
         }
 
         // Version column aids update performance.

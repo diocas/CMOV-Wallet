@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Windows.Controls;
@@ -21,7 +23,6 @@ namespace WalletApp.ViewModels
             moneyDB = new MoneyDataContext(moneyDBConnectionString);
         }
 
-
         private ObservableCollection<Money> _moneyItems;
         public ObservableCollection<Money> MoneyItems
         {
@@ -29,11 +30,10 @@ namespace WalletApp.ViewModels
             set
             {
                 _moneyItems = value;
-                NotifyPropertyChanged("MoneyItems");
                 NotifyPropertyChanged("TotalMoney");
+                NotifyPropertyChanged("MoneyItems");
             }
         }
-
 
         private List<Currency> _currencyList;
         public List<Currency> CurrencyList
@@ -42,11 +42,16 @@ namespace WalletApp.ViewModels
             set
             {
                 _currencyList = value;
+
+                try
+                {
+                    Currency.CurrentCurrencyValue = _currencyList.First(x => x.Code == IsolatedStorageSettings.ApplicationSettings["currencyCode"] as string).Value;
+                }
+                catch (Exception) { }
                 NotifyPropertyChanged("CurrencyList");
                 NotifyPropertyChanged("TotalMoney");
             }
         }
-
 
         public List<Currency> AvailableCurrencyList
         {
@@ -61,13 +66,56 @@ namespace WalletApp.ViewModels
             }
         }
 
-        // Write changes in the data context to the database.
+        public string TotalMoney
+        {
+            get
+            {
+                double total = 0;
+                foreach (Money money in MoneyItems)
+                {
+                    total += money.ConvertedValueDouble;
+                }
+                return total.ToString("0.00") + " " + IsolatedStorageSettings.ApplicationSettings["currencyCode"] as string;
+            }
+        }
+
+        private string _graphToShow;
+        public string GraphToShow
+        {
+            set
+            {
+                _graphToShow = value;
+                NotifyPropertyChanged("GraphBarVisible");
+                NotifyPropertyChanged("GraphCircularVisible");
+            }
+        }
+
+        public string GraphBarVisible
+        {
+            get
+            {
+                return _graphToShow == "Bars" ? "visible" : "Collapsed";
+            }
+        }
+
+        public string GraphCircularVisible
+        {
+            get
+            {
+                return _graphToShow == "Bars" ? "Collapsed" : "visible";
+            }
+        }
+
+        public Money getMoney(int id)
+        {
+            return MoneyItems.First(x => x.MoneyId == id);
+        }
+
         public void SaveChangesToDB()
         {
             moneyDB.SubmitChanges();
         }
 
-        // Query database and load the collections and list used by the pivot pages.
         public void LoadCollectionsFromDatabase()
         {
 
@@ -89,7 +137,6 @@ namespace WalletApp.ViewModels
 
         }
 
-
         public void AddMoney(Money newMoney)
         {
             moneyDB.MoneyItems.InsertOnSubmit(newMoney);
@@ -97,18 +144,11 @@ namespace WalletApp.ViewModels
             MoneyItems.Add(newMoney);
         }
 
-
-        // Remove a to-do task item from the database and collections.
         public void DeleteMoney(Money moneyForDelete)
         {
             MoneyItems.Remove(moneyForDelete);
             moneyDB.MoneyItems.DeleteOnSubmit(moneyForDelete);
             moneyDB.SubmitChanges();
-        }
-
-        public Money getMoney(int id)
-        {
-            return MoneyItems.First(x => x.MoneyId == id);
         }
 
         public void updateQuantity(int id, double quantity)
@@ -128,20 +168,6 @@ namespace WalletApp.ViewModels
             LoadCollectionsFromDatabase();
         }
 
-        public string TotalMoney
-        {
-            get
-            {
-                double total = 0;
-                foreach (Money money in MoneyItems)
-                {
-                    total += money.ConvertedValueDouble;
-                }
-                return total.ToString("0.00") + IsolatedStorageSettings.ApplicationSettings["currencyCode"] as string;
-            }
-        }
-
-
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -154,6 +180,22 @@ namespace WalletApp.ViewModels
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+        #endregion
+
+
+        #region INotifyPropertyChanging Members
+
+        public event PropertyChangingEventHandler PropertyChanging;
+
+        // Used to notify the data context that a data context property is about to change
+        private void NotifyPropertyChanging(string propertyName)
+        {
+            if (PropertyChanging != null)
+            {
+                PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
+            }
+        }
+
         #endregion
     }
 }

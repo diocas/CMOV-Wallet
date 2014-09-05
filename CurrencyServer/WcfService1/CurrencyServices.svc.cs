@@ -5,6 +5,8 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using System.Data.SqlClient;
+using System.Data.Entity;
+using System.Diagnostics;
 
 namespace CurrencyService
 {
@@ -39,6 +41,16 @@ namespace CurrencyService
             Currency currency2 = GetCurrencyByCode(code2);
 
             return currency1.Value / currency2.Value;
+        }
+
+        public void UpdateCurrency(string code, double value)
+        {
+            using (CurEntityModel currencies = new CurEntityModel())
+            {
+                Currency cur = currencies.Currencies.SingleOrDefault(c => c.Code == code);
+                cur.Value = value;
+                currencies.SaveChanges();
+            }
         }
 
     }

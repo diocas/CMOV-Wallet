@@ -14,29 +14,34 @@
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True">
 
-    <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
             <TextBlock Text="Wallet" Style="{StaticResource PhoneTextNormalStyle}"/>
             <TextBlock Text="settings" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
-        <!--ContentPanel - place additional content here-->
-        <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+        <StackPanel x:Name="ContentPanel" Grid.Row="3" Margin="12,0,12,0">
             <TextBlock Text="Currency to convert"/>
             <toolkit:ListPicker
                 x:Name="defaultCurrencyListPicker"
                 ItemsSource="{Binding CurrencyList}"
                 DisplayMemberPath="Code">
             </toolkit:ListPicker>
-            
-            <Button Content="Save"
+
+                <TextBlock Text="Graph to show"/>
+                <toolkit:ListPicker
+                x:Name="defaultGraphListPicker"
+                DisplayMemberPath="Code">
+                    <toolkit:ListPickerItem>Circular</toolkit:ListPickerItem>
+                    <toolkit:ListPickerItem>Bars</toolkit:ListPickerItem>
+                </toolkit:ListPicker>
+
+                <Button Content="Save"
                Click="Button_Click"/>
         </StackPanel>
     </Grid>

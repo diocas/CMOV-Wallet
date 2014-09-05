@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:amq="clr-namespace:AmCharts.Windows.QuickCharts;assembly=AmCharts.Windows.QuickCharts.WP"
     mc:Ignorable="d"
     d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -42,25 +43,50 @@
             <!--Pivot item one-->
             <phone:PivotItem Header="Balance">
 
-                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Width="400">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="200" />
-                    </Grid.ColumnDefinitions>
+                <StackPanel Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
 
-                    <TextBlock
+
+                    <Grid  Margin="0,0,0,60" HorizontalAlignment="Stretch" VerticalAlignment="Top" Width="400">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="200" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
                         Text="Total money:"
                         FontSize="{StaticResource PhoneFontSizeLarge}"
                         Grid.Column="0"
                         VerticalAlignment="Center"/>
-                    <TextBlock
+                        <TextBlock
                         Text="{Binding TotalMoney}"
                         FontSize="{StaticResource PhoneFontSizeLarge}"
                         Grid.Column="1"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Right"/>
+                    </Grid>
 
-                </Grid>
+                    <amq:PieChart x:Name="ChartCircular"
+                        Height="350"
+                        Visibility="{Binding GraphCircularVisible}"
+                        DataSource="{Binding MoneyItems}"
+                        TitleMemberPath="Currency.Code" 
+                        ValueMemberPath="ConvertedValueDouble"/>
+
+                    <amq:SerialChart x:Name="ChartBars"
+                        Height="350"
+                        Grid.Row="1"
+                        Visibility="{Binding GraphBarVisible}"
+                        DataSource="{Binding MoneyItems}"
+                        PlotAreaBackground="Black"
+                        AxisForeground="White">
+                        <amq:SerialChart.Graphs >
+                            <amq:ColumnGraph ValueMemberPath="ConvertedValueDouble"/>
+                        </amq:SerialChart.Graphs>
+                        <amq:SerialChart.CategoryValueMemberPath>Currency.Code</amq:SerialChart.CategoryValueMemberPath>
+                    </amq:SerialChart>
+
+                </StackPanel>
+
 
             </phone:PivotItem>
 

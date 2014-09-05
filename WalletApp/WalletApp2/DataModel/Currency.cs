@@ -15,7 +15,8 @@ namespace WalletApp.DataModel
     [Table]
     public class Currency : INotifyPropertyChanged, INotifyPropertyChanging
     {
-        // Define ID: private field, public property and database column.
+        public static double CurrentCurrencyValue = 1;
+
         private int _id;
 
         [Column(IsPrimaryKey = true, IsDbGenerated = true, DbType = "INT NOT NULL Identity", CanBeNull = false, AutoSync = AutoSync.OnInsert)]
@@ -72,8 +73,10 @@ namespace WalletApp.DataModel
                 if (_value != value)
                 {
                     NotifyPropertyChanging("Value");
+                    NotifyPropertyChanging("CurrentCurrencyValue");
                     _value = value;
                     NotifyPropertyChanged("Value");
+                    NotifyPropertyChanged("CurrentCurrencyValue");
                 }
             }
         }

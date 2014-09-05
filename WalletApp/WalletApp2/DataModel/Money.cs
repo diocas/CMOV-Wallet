@@ -8,10 +8,13 @@ using System.Data.Linq.Mapping;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.IO.IsolatedStorage;
+using WalletApp.DataAccess;
+using System.Diagnostics;
 
 
 namespace WalletApp.DataModel
 {
+
     [Table]
     public class Money : INotifyPropertyChanged, INotifyPropertyChanging
     {
@@ -36,7 +39,6 @@ namespace WalletApp.DataModel
             }
         }
 
-        // Define completion value: private field, public property and database column.
         private double _quantity;
 
         [Column]
@@ -61,14 +63,11 @@ namespace WalletApp.DataModel
             }
         }
 
-        // Internal column for the associated ToDoCategory ID value
         [Column]
         internal int _currencyId;
 
-        // Entity reference, to identify the ToDoCategory "storage" table
         private EntityRef<Currency> _currency;
 
-        // Association, to describe the relationship between this key and that "storage" table
         [Association(Storage = "_currency", ThisKey = "_currencyId", OtherKey = "Id", IsForeignKey = true)]
         public Currency Currency
         {
@@ -95,7 +94,7 @@ namespace WalletApp.DataModel
         {
             get
             {
-                return ConvertedValueDouble.ToString("0.00") + IsolatedStorageSettings.ApplicationSettings["currencyCode"] as string;
+                return ConvertedValueDouble.ToString("0.00") + " " + IsolatedStorageSettings.ApplicationSettings["currencyCode"] as string;
             }
         }
 
@@ -103,7 +102,14 @@ namespace WalletApp.DataModel
         {
             get
             {
-                return ( Quantity * Currency.Value);
+                try
+                {
+                    return (Quantity * (Currency.Value / Currency.CurrentCurrencyValue));
+                }
+                catch (Exception)
+                {
+                    return 0;
+                }
             }
         }
 

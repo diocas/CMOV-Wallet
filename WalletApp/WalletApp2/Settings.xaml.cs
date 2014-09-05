@@ -28,21 +28,48 @@ namespace WalletApp
                 string code = settings["currencyCode"] as string;
                 defaultCurrencyListPicker.SelectedItem = App.ViewModel.CurrencyList.First(x => x.Code == code);
             }
+
+            if (settings.Contains("graphType"))
+            {
+                string graph = settings["graphType"] as string;
+                foreach (ListPickerItem pick in defaultGraphListPicker.Items)
+                {
+                    if (pick.Content.ToString() == graph)
+                    {
+                        defaultGraphListPicker.SelectedItem = pick;
+                    }
+                }
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
-            String code = ((Currency)defaultCurrencyListPicker.SelectedItem).Code;
+            Currency chosenCurrency = (Currency)defaultCurrencyListPicker.SelectedItem;
+            Currency.CurrentCurrencyValue = chosenCurrency.Value;
+            String graph = ((ListPickerItem)defaultGraphListPicker.SelectedItem).Content.ToString();
             if (!settings.Contains("currencyCode"))
             {
-                settings.Add("currencyCode", code);
+                settings.Add("currencyCode", chosenCurrency.Code);
             }
             else
             {
-                settings["currencyCode"] = code;
+                settings["currencyCode"] = chosenCurrency.Code;
             }
+
+            if (!settings.Contains("graphType"))
+            {
+                settings.Add("graphType", graph);
+            }
+            else
+            {
+                settings["graphType"] = graph;
+            }
+            App.ViewModel.GraphToShow = graph;
             settings.Save();
+            if (NavigationService.CanGoBack)
+            {
+                NavigationService.GoBack();
+            }
         }
     }
 }

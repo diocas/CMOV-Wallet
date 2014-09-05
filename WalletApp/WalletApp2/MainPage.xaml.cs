@@ -13,19 +13,17 @@ using System.Diagnostics;
 using WalletApp.DataModel;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using AmCharts.Windows.QuickCharts;
 
 namespace WalletApp
 {
     public partial class MainPage : PhoneApplicationPage, INotifyPropertyChanged
     {
-       
 
-        // Constructor
         public MainPage()
         {
             InitializeComponent();
             this.DataContext = App.ViewModel;
-
         }
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
@@ -34,33 +32,15 @@ namespace WalletApp
             UpdateCurrencies();
         }
 
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        // Used to notify the app that a property has changed.
-        private void NotifyPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-        #endregion
-
         protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
         {
-            // Save changes to the database.
             App.ViewModel.SaveChangesToDB();
         }
-
 
         private void AddAppBarButton_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/NewMoneyEntry.xaml", UriKind.Relative));
         }
-
 
         private void UpdateAppBarButton_Click(object sender, EventArgs e)
         {
@@ -101,6 +81,20 @@ namespace WalletApp
             NavigationService.Navigate(new Uri("/Settings.xaml", UriKind.Relative));
         }
 
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        // Used to notify the app that a property has changed.
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        #endregion
        
     }
 }

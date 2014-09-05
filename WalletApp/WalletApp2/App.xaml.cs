@@ -101,6 +101,17 @@ namespace WalletApp
                 settings.Add("currencyCode", App.ViewModel.CurrencyList[0].Code);
                 settings.Save();
             }
+            if (!settings.Contains("graphType"))
+            {
+                settings.Add("graphType", "Circular");
+                settings.Save();
+                App.ViewModel.GraphToShow = "Circular";
+            }
+            else
+            {
+
+                App.ViewModel.GraphToShow = settings["graphType"] as string;
+            }
           
         }
 

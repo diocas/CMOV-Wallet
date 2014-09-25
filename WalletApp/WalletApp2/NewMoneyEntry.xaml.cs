@@ -23,6 +23,10 @@ namespace WalletApp
 
         }
 
+        /// <summary>
+        /// If id passed to this page, enter the edit mode (fix the currency and show the delete button)
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -45,6 +49,11 @@ namespace WalletApp
             }
         }
 
+        /// <summary>
+        /// Save button click action. Save the updated/new value
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void appBarOkButton_Click(object sender, EventArgs e)
         {
             if (quantityTextBox.Text.Length > 0 && (Currency)currencyListPicker.SelectedItem != null)
@@ -81,6 +90,11 @@ namespace WalletApp
             }
         }
 
+        /// <summary>
+        /// Delete button click action. Remove the currency from the database.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void deleteButton_Click(object sender, EventArgs e)
         {
             MessageBoxResult m = MessageBox.Show("Are your sure you want to delete?", "Delete", MessageBoxButton.OKCancel);

@@ -15,13 +15,21 @@ namespace CurrencyService
     // NOTE: In order to launch WCF Test Client for testing this service, please select CurrencyServices.svc or CurrencyServices.svc.cs at the Solution Explorer and start debugging.
     public class CurrencyServices : ICurrencyServices
     {
-
+        /// <summary>
+        /// Get the list of all currencies and corresponding rate
+        /// </summary>
+        /// <returns></returns>
         public List<Currency> GetCurrencyListing()
         {
             Console.WriteLine(GetCurrencyByCode("EUR").Code);
                 return new CurEntityModel().Currencies.ToList();
         }
 
+        /// <summary>
+        /// Get a currency, with the conversion value, by code
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
         public Currency GetCurrencyByCode(string code) {
             using (CurEntityModel currencies = new CurEntityModel())
             {
@@ -34,7 +42,12 @@ namespace CurrencyService
             } 
         }
 
-
+        /// <summary>
+        /// Get the conversion rate between two currencies
+        /// </summary>
+        /// <param name="code1">Code of currency that is converted</param>
+        /// <param name="code2">Code of currency to convert to</param>
+        /// <returns></returns>
         public double ConversionRate(string code1, string code2)
         {
             Currency currency1 = GetCurrencyByCode(code1);

@@ -14,7 +14,9 @@ using System.Diagnostics;
 
 namespace WalletApp.DataModel
 {
-
+    /// <summary>
+    /// Class that describes money. Money has quantity and a currency associated.
+    /// </summary>
     [Table]
     public class Money : INotifyPropertyChanged, INotifyPropertyChanging
     {
@@ -90,6 +92,9 @@ namespace WalletApp.DataModel
             }
         }
 
+        /// <summary>
+        /// Get the total ammount, converted to the defined currency, as a string, ending with the defined currency code
+        /// </summary>
         public string ConvertedValue
         {
             get
@@ -98,6 +103,9 @@ namespace WalletApp.DataModel
             }
         }
 
+        /// <summary>
+        /// Get the total ammount converted to the defined currency.
+        /// </summary>
         public double ConvertedValueDouble
         {
             get

@@ -95,6 +95,7 @@ namespace WalletApp
             // Query the local database and load observable collections.
             viewModel.LoadCollectionsFromDatabase();
 
+            // Get the stored settings.
             IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
             if (!settings.Contains("currencyCode"))
             {

@@ -11,10 +11,12 @@ using WalletApp.DataModel;
 namespace WalletApp.DataAccess
 {
 
-
+    /// <summary>
+    /// Task to sync the currencies with the server
+    /// </summary>
     class ServerConnection
     {
-        private static string server = "http://windows-diogo:56014/";
+        private static string server = "http://192.168.0.100:56015/";
         private static string service = "CurrencyServices.svc/";
         public static ObservableCollection<Currency> Currencies { get; set; }
 

@@ -12,6 +12,11 @@ using System.Collections.ObjectModel;
 
 namespace WalletApp.DataModel
 {
+    /// <summary>
+    /// Currency model for stiring in database and manipulating in the application.
+    /// There are values dependent on others. For that reason, when there is an update to some values, all the dependants 
+    /// should also be declared as updated.
+    /// </summary>
     [Table]
     public class Currency : INotifyPropertyChanged, INotifyPropertyChanging
     {

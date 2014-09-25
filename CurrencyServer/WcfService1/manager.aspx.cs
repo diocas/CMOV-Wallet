@@ -13,7 +13,11 @@ namespace CurrencyService
         List<Currency> currencyList;
         CurrencyServices currencyService;
 
-
+        /// <summary>
+        /// On page load get all currencies from database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
             currencyService = new CurrencyServices();
@@ -26,6 +30,11 @@ namespace CurrencyService
             }
         }
 
+        /// <summary>
+        /// On currencies list ckick
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void CurrencyListView_ItemCommand(object sender, ListViewCommandEventArgs e)
         {
             if (e.CommandName == "Update")
@@ -36,12 +45,18 @@ namespace CurrencyService
             }
         }
 
+        /// <summary>
+        /// Action edit a currency
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void CurrencyListView_ItemEditing(object sender, ListViewEditEventArgs e)
         {
             CurrencyListView.EditIndex = e.NewEditIndex;
             CurrencyListView.DataSource = currencyList;
             CurrencyListView.DataBind();
         }
+
 
         protected void CurrencyListView_ItemUpdating(object sender, ListViewUpdateEventArgs e)
         {

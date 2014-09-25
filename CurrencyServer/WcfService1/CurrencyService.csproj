@@ -73,7 +73,9 @@
     </Content>
     <Content Include="CurrencyServices.svc" />
     <Content Include="manager.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CurEntityModel.cs" />
@@ -120,9 +122,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>56014</DevelopmentServerPort>
+          <DevelopmentServerPort>56015</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://windows-diogo:56014/</IISUrl>
+          <IISUrl>http://localhost:56015/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

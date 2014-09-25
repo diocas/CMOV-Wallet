@@ -219,18 +219,22 @@ namespace AmCharts.Windows.QuickCharts
             double runningTotal = 0;
             for (int i = 0; i < _slices.Count; i++)
             {
-                // title
-                _slices[i].Title = _titles[i];
-                SetSliceBrush(i);
+                try
+                {
+                    // title
+                    _slices[i].Title = _titles[i];
+                    SetSliceBrush(i);
 
-                // angle
-                ((RotateTransform)_slices[i].RenderTransform).Angle = (_total != 0 ? runningTotal / _total * 360 : 360.0 / _slices.Count * i);
-                runningTotal += _values[i];
+                    // angle
+                    ((RotateTransform)_slices[i].RenderTransform).Angle = (_total != 0 ? runningTotal / _total * 360 : 360.0 / _slices.Count * i);
+                    runningTotal += _values[i];
 
-                // tooltip
-                string tooltipContent = _slices[i].Title + " : " + _values[i].ToString() + " (" + (_total != 0 ? _values[i] / _total : 1.0 / _slices.Count).ToString("0.#%") + ")";
-                //ToolTipService.SetToolTip(_slices[i], tooltipContent);
-                _slices[i].ToolTipText = tooltipContent;
+                    // tooltip
+                    string tooltipContent = _slices[i].Title + " : " + _values[i].ToString() + " (" + (_total != 0 ? _values[i] / _total : 1.0 / _slices.Count).ToString("0.#%") + ")";
+                    //ToolTipService.SetToolTip(_slices[i], tooltipContent);
+                    _slices[i].ToolTipText = tooltipContent;
+                }
+                catch (Exception e) { }
             }
             UpdateLegend();
         }

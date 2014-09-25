@@ -6,6 +6,9 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
+    /// <summary>
+    /// Class that describes the values that a currency should have
+    /// </summary>
     [Table("Currency")]
     public partial class Currency
     {

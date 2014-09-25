@@ -8,10 +8,17 @@ using System.ServiceModel.Web;
 
 namespace CurrencyService
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "ICurrencyServices" in both code and config file together.
+    
+    /// <summary>
+    /// Conversion rates REST service
+    /// </summary>
     [ServiceContract]
     public interface ICurrencyServices
     {
+        /// <summary>
+        /// Get the list of all currencies and corresponding rate
+        /// </summary>
+        /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "GET",
             ResponseFormat = WebMessageFormat.Json,
@@ -19,6 +26,11 @@ namespace CurrencyService
             UriTemplate = "CurrencyList")]
         List<Currency> GetCurrencyListing();
 
+        /// <summary>
+        /// Get a currency, with the conversion value, by code
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "GET",
             ResponseFormat = WebMessageFormat.Json,
@@ -26,6 +38,12 @@ namespace CurrencyService
             UriTemplate = "GetCurrency/{code}")]
         Currency GetCurrencyByCode(string code);
 
+        /// <summary>
+        /// Get the conversion rate between two currencies
+        /// </summary>
+        /// <param name="code1">Code of currency that is converted</param>
+        /// <param name="code2">Code of currency to convert to</param>
+        /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "GET",
             ResponseFormat = WebMessageFormat.Json,

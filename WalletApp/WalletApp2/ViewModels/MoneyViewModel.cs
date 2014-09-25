@@ -13,6 +13,9 @@ using WalletApp.DataModel;
 
 namespace WalletApp.ViewModels
 {
+    /// <summary>
+    /// Money viewmodel, used to pass the values to the GUI
+    /// </summary>
     public class MoneyViewModel : INotifyPropertyChanged
     {
         private MoneyDataContext moneyDB;

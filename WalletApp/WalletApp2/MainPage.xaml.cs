@@ -26,27 +26,49 @@ namespace WalletApp
             this.DataContext = App.ViewModel;
         }
 
+        /// <summary>
+        /// When oppening the app, try to update the currencies with the server.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
             SystemTray.ProgressIndicator = new ProgressIndicator();
             UpdateCurrencies();
         }
 
+        /// <summary>
+        /// When returning to page, sync the data with the database.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
         {
             App.ViewModel.SaveChangesToDB();
         }
 
+        /// <summary>
+        /// Add new currency button click action. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddAppBarButton_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/NewMoneyEntry.xaml", UriKind.Relative));
         }
 
+        /// <summary>
+        /// Sync/update button click action. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdateAppBarButton_Click(object sender, EventArgs e)
         {
             UpdateCurrencies();
         }
 
+        /// <summary>
+        /// Sync the currencies with the server, while showing the progress bar.
+        /// </summary>
         private async void UpdateCurrencies()
         {
             try
@@ -65,6 +87,11 @@ namespace WalletApp
            
         }
 
+        /// <summary>
+        /// Money list click action. Open the newMoney page to edit or delete the ammount of money for that currency.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MoneyItemsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -76,6 +103,11 @@ namespace WalletApp
             catch (Exception) { }
         }
 
+        /// <summary>
+        /// Settings button click action. Open the settings page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SettingsButton_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/Settings.xaml", UriKind.Relative));
